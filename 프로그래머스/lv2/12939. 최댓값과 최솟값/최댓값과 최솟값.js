@@ -1,8 +1,6 @@
 function solution(s) {
-    let answer = '';
-    let arr = s.split(' ');
-    const max = Math.max(...arr);
-    const min = Math.min(...arr);
-    answer = `${min} ${max}`
-    return answer;
+    return s.split(' ')
+        .sort((a,b) => a-b)
+        .filter((v, i) => i === 0 || i === s.split(' ').length - 1)
+        .join(' ');
 }
