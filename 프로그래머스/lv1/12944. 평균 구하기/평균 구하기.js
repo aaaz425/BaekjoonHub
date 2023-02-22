@@ -1,5 +1,3 @@
 function solution(arr) {
-    var answer = 0;
-    arr.forEach(element => answer += element);
-    return answer / arr.length;
+    return arr.reduce((acc, cur) => acc + cur, 0) / arr.length;
 }
