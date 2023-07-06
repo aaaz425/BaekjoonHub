@@ -24,4 +24,6 @@ function solution(arr) {
         baseArr = [...newArr];
         count++;
     }
+    
+    return count;
 }
