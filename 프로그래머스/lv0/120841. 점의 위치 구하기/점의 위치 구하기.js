@@ -1,6 +1,11 @@
 function solution(dot) {
-    return dot[0] * dot[1] > 0 && dot[0] > 0 ? 1 : 
-    dot[0] * dot[1] < 0 && dot[0] < 0 ? 2 :
-    dot[0] * dot[1] > 0 && dot[0] < 0 ? 3 : 
-    4;
+    const x = dot[0];
+    const y = dot[1];
+    const isSameSign = x * y > 0;
+    
+    if (isSameSign) {
+        return x > 0 ? 1 : 3;
+    }
+    
+    return x > 0 ? 4 : 2;
 }
