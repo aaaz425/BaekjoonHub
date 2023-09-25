@@ -1,4 +1,3 @@
 function solution(array, height) {
-    const newArr = array.filter(element => element > height)
-    return newArr.length;
+    return newArr = array.filter(element => element > height).length
 }
