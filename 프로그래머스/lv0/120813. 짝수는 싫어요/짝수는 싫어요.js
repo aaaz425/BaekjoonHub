@@ -1,11 +1,5 @@
 function solution(n) {
-    const answer = [];
-    
-    for (let i = 0; i <= n; i++) {
-        if (i % 2 === 1) {
-            answer.push(i);
-        }
-    }
-    
-    return answer;
+    return Array.from({length: n}, (_, i) => i + 1)
+    .filter(value => value % 2 === 1)
+    .sort((a, b) => a - b);
 }
