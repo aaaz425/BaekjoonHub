@@ -1,3 +1,3 @@
 function solution(array, n) {
-    return array.filter(element => element === n).length;
+    return array.filter(element => element === n).length
 }
