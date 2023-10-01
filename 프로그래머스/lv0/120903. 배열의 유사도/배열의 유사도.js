@@ -1,5 +1,5 @@
 function solution(s1, s2) {
-    let count = 0;
-    s1.forEach(element => s2.includes(element) ? count++ : count);
-    return count;
+    return s1.reduce((acc, cur) => {
+        return s2.includes(cur) ? acc += 1 : acc;
+    }, 0);
 }
