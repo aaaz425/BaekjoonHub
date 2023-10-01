@@ -1,7 +1,10 @@
 function solution(n) {
-    let answer = 1;
-    for (let i = 1; 7 * i < n; i++) {
-        answer ++;
+    const share = Math.floor(n / 7);
+    const remain = n % 7;
+    
+    if (remain) {
+        return share + 1;
     }
-    return answer;
+    
+    return share;
 }
