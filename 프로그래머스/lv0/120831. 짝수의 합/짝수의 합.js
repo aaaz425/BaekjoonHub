@@ -1,9 +1,7 @@
 function solution(n) {
-    let answer = 0;
-    let i = 1;
-    while(n >= i) {
-        i % 2 == 0 ? answer += i : answer;
-        i++
-    }
-    return answer;
+    const nArr = Array.from({length: n}, (_, i) => i + 1);
+    const filteredArr = nArr.filter(value => value % 2 === 0);
+    const sumOfArr = filteredArr.reduce((acc, cur) => acc + cur, 0);
+    
+    return sumOfArr;
 }
