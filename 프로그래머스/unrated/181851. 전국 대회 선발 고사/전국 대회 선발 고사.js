@@ -4,7 +4,7 @@ function solution(rank, attendance) {
             score: score,
             index: index
         }
-    })
+    });
     const attendableRank = ranking.filter((_, index) => attendance[index]);
     const sortedRank = attendableRank.sort((a, b) => a.score - b.score);
     const [a, b, c] = sortedRank.slice(0, 3);
