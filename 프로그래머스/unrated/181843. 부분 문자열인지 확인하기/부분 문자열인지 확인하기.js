@@ -1,3 +1,3 @@
 function solution(my_string, target) {
-    return my_string.indexOf(target) === -1 ? 0 : 1;
+    return my_string.includes(target) ? 1 : 0;
 }
