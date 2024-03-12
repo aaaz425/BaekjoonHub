@@ -9,7 +9,7 @@ function solution(n, words) {
         
         if (endWord !== startWord) {
             const num = index % n + 1;
-            const order = index % n === 0 ? Math.ceil(index + 1 / n) : Math.ceil(index / n);
+            const order = index % n === 0 ? index / n + 1 : Math.ceil(index / n);
             
             answer.push(num);
             answer.push(order);
