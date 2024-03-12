@@ -15,7 +15,7 @@ function solution(n, arr1, arr2) {
         let finalSpace = '';
         
         for (let i = 0; i < value.length; i++) {
-            const isBlocked = +value[i] + +newArr2[index][i] > 0;
+            const isBlocked = +value[i] || +newArr2[index][i];
             
             if (isBlocked) {
                 finalSpace += '#';
