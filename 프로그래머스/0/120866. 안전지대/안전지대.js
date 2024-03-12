@@ -8,14 +8,8 @@ function solution(board) {
         for (let j = 0; j < board.length; j++) {
             const isNotSafe = range.some(idx => {
                 const [x, y] = idx;
-                const targetX = i + x < 0 ? 0 : 
-                    i + x > board.length - 1 ? board.length - 1 : 
-                    i + x;
-                const targetY = j + y < 0 ? 0 : 
-                    j + y > board.length - 1 ? board.length - 1 : 
-                    j + y
 
-                return board[targetX][targetY];
+                return board?.[i + x]?.[j + y];
             })
             
             if (isNotSafe) {
