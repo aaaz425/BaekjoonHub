@@ -1,11 +1,11 @@
 function solution(operations) {
-    let queue = [];
+    const queue = [];
     
     operations.forEach(operation => {
         const [a, b] = operation.split(' ');
         
         if (a === 'I') {
-            queue.push(b);
+            queue.push(+b);
             return;
         }
         
@@ -13,12 +13,12 @@ function solution(operations) {
             return;
         }
         
-        queue = queue.sort((a, b) => b - a);
-        
         if (b == 1) {
-            queue.shift();
+            const targetIdx = queue.indexOf(Math.max(...queue));
+            queue.splice(targetIdx, 1);
         } else {
-            queue.pop();
+            const targetIdx = queue.indexOf(Math.min(...queue));
+            queue.splice(targetIdx, 1);
         }
     })
     
@@ -26,8 +26,5 @@ function solution(operations) {
         return [0, 0];
     }
     
-    const max = Math.max(...queue);
-    const min = Math.min(...queue);
-    
-    return [max, min];
+    return [Math.max(...queue), Math.min(...queue)];
 }
