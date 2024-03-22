@@ -1,34 +1,33 @@
 function solution(operations) {
-    let vQueue = [];
-    const cQueue = [];
+    let queue = [];
     
     operations.forEach(operation => {
         const [a, b] = operation.split(' ');
         
         if (a === 'I') {
-            vQueue.push(b);
+            queue.push(b);
             return;
         }
         
-        if (!vQueue.length) {
+        if (!queue.length) {
             return;
         }
         
-        vQueue = vQueue.sort((a, b) => b - a);
+        queue = queue.sort((a, b) => b - a);
         
         if (b == 1) {
-            vQueue.shift();
+            queue.shift();
         } else {
-            vQueue.pop();
+            queue.pop();
         }
     })
     
-    if (!vQueue.length) {
+    if (!queue.length) {
         return [0, 0];
     }
     
-    const max = Math.max(...vQueue);
-    const min = Math.min(...vQueue);
+    const max = Math.max(...queue);
+    const min = Math.min(...queue);
     
     return [max, min];
 }
