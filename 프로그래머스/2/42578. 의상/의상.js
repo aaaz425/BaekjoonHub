@@ -12,7 +12,7 @@ function solution(clothes) {
         return Object.values(obj)[0].length;
     }
     
-    let cases = [];
+    const cases = [];
     for (const key in obj) {
         cases.push(obj[key].length + 1);
     }
