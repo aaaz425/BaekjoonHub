@@ -1,58 +1,30 @@
-const readline = require('readline');
+const fs = require("fs");
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const input = fs
+  .readFileSync(0, "utf8")
+  .toString()
+  .trim()
+  .split("\n")
+  .map(Number);
 
-const input = [];
-const quater = 25;
+const [T, ...rest] = input;
+
+const quarter = 25;
 const dime = 10;
 const nickel = 5;
 const penny = 1;
 
-const getQuotientAndRemainder = (dividend, divisor) => {
-  return [Math.floor(dividend / divisor), dividend % divisor];
-};
+const getQR = (dividend, divisor) => [Math.floor(dividend / divisor), dividend % divisor];
 
-rl.on('line', (line) => {
-  input.push(line);
+let out = [];
+for (let i = 0; i < T; i++) {
+  let charge = rest[i];
 
-  if (!line) {
-    rl.close();
-  }
-}).on('close', () => {
-  const [count, ...rest] = input;
+  const [q, r1] = getQR(charge, quarter);
+  const [d, r2] = getQR(r1, dime);
+  const [n, r3] = getQR(r2, nickel);
+  const [p] = getQR(r3, penny);
 
-  rest.forEach((charge) => {
-    const coins = [];
-    const [quaterQuotient, quaterRemainder] = getQuotientAndRemainder(
-      charge,
-      quater
-    );
-
-    coins.push(quaterQuotient);
-
-    const [dimeQuotient, dimeRemainder] = getQuotientAndRemainder(
-      quaterRemainder,
-      dime
-    );
-
-    coins.push(dimeQuotient);
-
-    const [nickelQuotient, nickelRemainder] = getQuotientAndRemainder(
-      dimeRemainder,
-      nickel
-    );
-
-    coins.push(nickelQuotient);
-
-    const [pennyQuotient, _] = getQuotientAndRemainder(nickelRemainder, penny);
-
-    coins.push(pennyQuotient);
-
-    console.log(coins.join(' '));
-  });
-
-  process.exit();
-});
+  out.push(`${q} ${d} ${n} ${p}`);
+}
+console.log(out.join("\n"));
