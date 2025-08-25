@@ -7,9 +7,9 @@ let answer = 0;
 inputs.forEach(input => {
     const [n, d] = input.split(' ');
     
-    if (d === '0' && arr[+n] === 1) {
-        answer++;
-    } else if (d === '1' && arr[+n] === 0) {
+    if (arr[+n] === 1 && d === '0') {
+	      answer++;
+    } else if (arr[+n] === 0 && d === '1') {
         answer++;
     }
     
