@@ -1,3 +1,7 @@
 const fs = require('fs');
-const [A, B] = fs.readFileSync(0, 'utf8').trim().split(' ').map(Number);
-console.log(A + B);
+
+let [A, B] = fs.readFileSync(0, 'utf8').trim().split(' ');
+A = BigInt(A);
+B = BigInt(B);
+
+console.log((A + B).toString());
