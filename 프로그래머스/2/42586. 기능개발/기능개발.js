@@ -1,24 +1,20 @@
 function solution(progresses, speeds) {
-    const leftDays = progresses.map((v, i) => Math.ceil((100 - v) / speeds[i]));
-    let curDay = leftDays[0];
-    let head = 0;
     const answer = [];
+    let Q = [];
     
-    while (head < leftDays.length) {
-        let temp = 0;
-        for (let i = head; i < leftDays.length; i++) {
-            if (curDay < leftDays[i]) {
-                curDay = leftDays[i]
-                break;
-            }
-            
-            temp++;
-            head++;
+    for (let i = 0; i < progresses.length; i++) {
+        const rest = Math.ceil((100 - progresses[i]) / speeds[i]);
+        
+        if (rest > Q[0]) {
+            answer.push(Q.length);
+            Q = [];
         }
         
-        if (temp) {
-            answer.push(temp);
-        }       
+        Q.push(rest);
+    }
+    
+    if (Q.length) {
+        answer.push(Q.length);
     }
     
     return answer;
