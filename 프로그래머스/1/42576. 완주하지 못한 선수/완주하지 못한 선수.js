@@ -1,17 +1,21 @@
 function solution(participant, completion) {
-    const hash = {};
-    participant.forEach(name => {
-        if (!hash[name]) {
-            hash[name] = 1;
+    const map = new Map();
+    
+    for (const name of participant) {
+        if (map.get(name)) {
+            map.set(name, map.get(name) + 1);
         } else {
-            hash[name]++;
+            map.set(name, 1);
         }
-    })
-    completion.forEach(name => {
-        hash[name]--;
-        if (!hash[name]) {
-            delete hash[name];
+    }
+    
+    for (const name of completion) {
+        map.set(name, map.get(name) - 1);
+    }
+    
+    for (const name of map.keys()) {
+        if (map.get(name)) {
+            return name;
         }
-    })
-    return Object.keys(hash)[0];
+    }
 }
