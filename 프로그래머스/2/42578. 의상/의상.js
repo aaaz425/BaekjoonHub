@@ -1,20 +1,15 @@
 function solution(clothes) {
-    const obj = {};
-    clothes.forEach(([v, k]) => {
-        if (!obj[k]) {
-            obj[k] = [v];
-        } else {
-            obj[k].push(v);
-        }
-    })
+    const map = new Map();
     
-    if (Object.keys(obj).length === 1) {
-        return Object.values(obj)[0].length;
+    for (const [_, thing] of clothes) {
+        map.set(thing, (map.get(thing) || 0) + 1);
     }
     
-    const cases = [];
-    for (const key in obj) {
-        cases.push(obj[key].length + 1);
+    let answer = 1;
+    
+    for (value of map.values()) {
+        answer *= value + 1;
     }
-    return cases.reduce((acc, cur) => acc * cur, 1) - 1;
+    
+    return answer - 1;
 }
