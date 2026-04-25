@@ -1,14 +1,19 @@
 function solution(prices) {
-    return prices.map((val, idx) => {
-        let sum = 0;
-        for (let i = idx + 1; i < prices.length; i++) {
-            sum += 1;
-            
-            if (val > prices[i]) {
-                break;
-            }
-        }
-        
-        return sum;
-    })
+  const answer = Array(prices.length).fill(0);
+  const stack = [];
+  
+  for (let i = 0; i < prices.length; i++) {
+    while (stack.length && prices[i] < prices[stack[stack.length - 1]]) {
+      const prev = stack.pop();
+      answer[prev] = i - prev;
+    }
+    stack.push(i);
+  }
+  
+  while (stack.length) {
+    const prev = stack.pop();
+    answer[prev] = prices.length - 1 - prev;
+  }
+  
+  return answer;
 }
