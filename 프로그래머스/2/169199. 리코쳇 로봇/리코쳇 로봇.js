@@ -1,55 +1,51 @@
 function solution(board) {
     const n = board.length;
     const m = board[0].length;
-    
-    const cnt = Array(n).fill(0).map(v => Array(m).fill(Infinity));
-    let min = Infinity;
-    
-    const dfs = (y, x, count) => {
-        if (count >= min || count >= cnt[y][x]) {
-            return;
-        }
-        
-        if (board[y][x] === 'G') {
-            min = count;
-            return;
-        }
-        
-        cnt[y][x] = count;
-        count++;
-        
-        let [ty, dy] = [y, y];
-        let [rx, lx] = [x, x];
-        
-        while (ty > 0 && board[ty - 1][x] !== 'D') {
-            ty--;
-        }
-        
-        while (rx < m - 1 && board[y][rx + 1] !== 'D') {
-            rx++;
-        }
-        
-        while (dy < n - 1 && board[dy + 1][x] !== 'D') {
-            dy++;
-        }
-        
-        while (lx > 0 && board[y][lx - 1] !== 'D') {
-            lx--;
-        }
-        
-        dfs(ty, x, count);
-        dfs(y, rx, count);
-        dfs(dy, x, count);
-        dfs(y, lx, count);
-    }
-    
+
+    let R, G;
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < m; j++) {
-            if (board[i][j] === 'R') {
-                dfs(i, j, 0);
+            if (board[i][j] === 'R') R = [i, j];
+            if (board[i][j] === 'G') G = [i, j];
+        }
+    }
+    
+    const d = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    const visited = Array(n).fill(0).map(v => Array(m).fill(false));
+        
+    let head = 0;
+    const queue = [[R[0], R[1], 0]];
+    visited[R[0]][R[1]] = true;
+    
+    while (head < queue.length) {
+        const [y, x, count] = queue[head++];
+        
+        if (y === G[0] && x === G[1]) {
+            return count;
+        }
+        
+        for (const [dy, dx] of d) {
+            let ny = y
+            let nx = x;
+            
+            while (true) {
+                const ty = ny + dy;
+                const tx = nx + dx;
+                
+                if (ty < 0 || ty >= n || tx < 0 || tx >= m || board[ty][tx] === 'D') {
+                    break;
+                }
+                
+                ny = ty;
+                nx = tx;
+            }
+            
+            if (!visited[ny][nx]) {
+                visited[ny][nx] = true;
+                queue.push([ny, nx, count + 1]);
             }
         }
     }
     
-    return min === Infinity ? -1 : min;
+    return -1;
 }
