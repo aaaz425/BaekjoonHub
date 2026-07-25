@@ -1,35 +1,31 @@
 function solution(maps) {
-  const M = maps.length;
-  const N = maps[0].length;
-  const visited = Array.from({ length: M }, () => Array(N).fill(0));
-  const q = Array(N * M).fill([0, 0]);
-  let front = -1;
-  let rear = 0;
-  q[rear] = [0, 0];
+    const n = maps.length;
+    const m = maps[0].length;
+    const visited = Array(n).fill(0).map(v => Array(m).fill(false));
     
-  const dx = [0, 0, -1, 1];
-  const dy = [1, -1, 0, 0];
-
-  while (front < rear) {
-    front++;
-    const [y, x] = q[front];
-
-    for (let i = 0; i < 4; i++) {
-      const tx = x + dx[i];
-      const ty = y + dy[i];
-      if (ty >= 0 && ty < M && tx >= 0 && tx < N) {
-        if (ty == M - 1 && tx == N - 1) {
-          return visited[y][x] + 2;
+    const dir = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    
+    const queue = [[0, 0, 1]];
+    visited[0][0] = true;
+    let head = 0;
+    
+    while(head < queue.length) {
+        const [y, x, count] = queue[head++];
+        
+        if (y === n - 1 && x === m - 1) {
+            return count;
         }
-
-        if (maps[ty][tx] && !visited[ty][tx]) {
-          rear++;
-          q[rear] = [ty, tx];
-          visited[ty][tx] = visited[y][x] + 1;
+        
+        for (const [dy, dx] of dir) {
+            let ny = y + dy;
+            let nx = x + dx;
+            
+            if (ny >= 0 && ny < n && nx >= 0 && nx < m && maps[ny][nx] && !visited[ny][nx]) {
+                visited[ny][nx] = true;
+                queue.push([ny, nx, count + 1]);
+            }
         }
-      }
     }
-  }
-
-  return -1;
+    
+    return -1;
 }
