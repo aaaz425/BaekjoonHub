@@ -2,61 +2,54 @@ function solution(board) {
     const n = board.length;
     const m = board[0].length;
     
-    let start = null;
+    const cnt = Array(n).fill(0).map(v => Array(m).fill(Infinity));
+    let min = Infinity;
+    
+    const dfs = (y, x, count) => {
+        if (count >= min || count >= cnt[y][x]) {
+            return;
+        }
+        
+        if (board[y][x] === 'G') {
+            min = count;
+            return;
+        }
+        
+        cnt[y][x] = count;
+        count++;
+        
+        let [ty, dy] = [y, y];
+        let [rx, lx] = [x, x];
+        
+        while (ty > 0 && board[ty - 1][x] !== 'D') {
+            ty--;
+        }
+        
+        while (rx < m - 1 && board[y][rx + 1] !== 'D') {
+            rx++;
+        }
+        
+        while (dy < n - 1 && board[dy + 1][x] !== 'D') {
+            dy++;
+        }
+        
+        while (lx > 0 && board[y][lx - 1] !== 'D') {
+            lx--;
+        }
+        
+        dfs(ty, x, count);
+        dfs(y, rx, count);
+        dfs(dy, x, count);
+        dfs(y, lx, count);
+    }
     
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < m; j++) {
-            if (board[i][j] === "R") {
-                start = [i, j];
+            if (board[i][j] === 'R') {
+                dfs(i, j, 0);
             }
         }
     }
     
-    const dirs = [
-        [1, 0],
-        [-1, 0],
-        [0, 1],
-        [0, -1]
-    ];
-    
-    const visited = Array.from({ length: n }, () => Array(m).fill(false));
-    const queue = [[...start, 0]];
-    
-    visited[start[0]][start[1]] = true;
-    
-    while (queue.length) {
-        const [x, y, count] = queue.shift();
-        
-        if (board[x][y] === "G") {
-            return count;
-        }
-        
-        for (const [dx, dy] of dirs) {
-            let nx = x;
-            let ny = y;
-            
-            while (true) {
-                const tx = nx + dx;
-                const ty = ny + dy;
-                
-                if (
-                    tx < 0 || tx >= n ||
-                    ty < 0 || ty >= m ||
-                    board[tx][ty] === "D"
-                ) {
-                    break;
-                }
-                
-                nx = tx;
-                ny = ty;
-            }
-            
-            if (!visited[nx][ny]) {
-                visited[nx][ny] = true;
-                queue.push([nx, ny, count + 1]);
-            }
-        }
-    }
-    
-    return -1;
+    return min === Infinity ? -1 : min;
 }
