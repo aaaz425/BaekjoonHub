@@ -1,27 +1,29 @@
 function solution(genres, plays) {
-    const genreMap = {};
-    const genreTotal = {};
+    const genreMap = new Map();
 
     genres.forEach((genre, index) => {
-        const play = plays[index];
-        if (!genreMap[genre]) genreMap[genre] = [];
-        genreMap[genre].push({ index, play });
+        if (!genreMap.has(genre)) {
+            genreMap.set(genre, {
+                total: 0,
+                songs: [],
+            });
+        }
 
-        genreTotal[genre] = (genreTotal[genre] || 0) + play;
+        const genreInfo = genreMap.get(genre);
+
+        genreInfo.total += plays[index];
+        genreInfo.songs.push({
+            index,
+            play: plays[index],
+        });
     });
 
-    const sortedGenres = Object.keys(genreTotal)
-        .sort((a, b) => genreTotal[b] - genreTotal[a]);
-
-    const result = [];
-
-    sortedGenres.forEach(genre => {
-        const songs = genreMap[genre]
-            .sort((a, b) => b.play - a.play || a.index - b.index)
-            .slice(0, 2);
-
-        songs.forEach(song => result.push(song.index));
-    });
-
-    return result;
+    return [...genreMap.values()]
+        .sort((a, b) => b.total - a.total)
+        .flatMap(({ songs }) =>
+            songs
+                .sort((a, b) => b.play - a.play || a.index - b.index)
+                .slice(0, 2)
+                .map(song => song.index)
+        );
 }
