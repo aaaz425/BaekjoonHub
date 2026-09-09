@@ -1,11 +1,15 @@
 function solution(arr) {
     const stack = [];
+    let top = -1;
     
-    arr.forEach(val => {
-        if (stack[stack.length - 1] !== val) {
-            stack.push(val);
+    for (const num of arr) {
+        if (stack[top] === num) {
+            continue;
         }
-     })
+        
+        top++;
+        stack.push(num);
+    }
     
     return stack;
 }
