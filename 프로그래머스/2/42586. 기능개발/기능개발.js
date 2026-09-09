@@ -1,20 +1,24 @@
 function solution(progresses, speeds) {
     const answer = [];
-    let Q = [];
+    let top = 0;
+    let time = 0;
     
-    for (let i = 0; i < progresses.length; i++) {
-        const rest = Math.ceil((100 - progresses[i]) / speeds[i]);
+    while(top < progresses.length) {
+        time++;
+        let cur = 0;
         
-        if (rest > Q[0]) {
-            answer.push(Q.length);
-            Q = [];
+        for (let i = top; i < progresses.length; i++) {
+            if (progresses[i] + speeds[i] * time < 100) {
+                break;
+            }
+            
+            cur++;
         }
         
-        Q.push(rest);
-    }
-    
-    if (Q.length) {
-        answer.push(Q.length);
+        if (cur) {
+            top += cur;
+            answer.push(cur);
+        }
     }
     
     return answer;
